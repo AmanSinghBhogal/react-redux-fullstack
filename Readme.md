@@ -20,14 +20,12 @@ root/
 - Redux Toolkit
 - Axios
 - React Router
-- Tailwind CSS / Bootstrap (optional)
 
 ### 🌐 Backend
 - Spring Boot
 - Spring Data JPA
 - Spring Web
 - MySQL
-- Lombok
 - Hibernate
 
 ---
@@ -49,24 +47,24 @@ MySQL database with two tables:
 
 ### `users`
 
-| Field         | Type           | Description             |
-|---------------|----------------|-------------------------|
-| id            | INT (PK)       | user ID                 |
-| username      | VARCHAR(50)    | Unique username         |
-| email         | VARCHAR(100)   | Unique email address    |
-| password_hash | VARCHAR(255)   | Hashed password         |
+| Field         | Type              | Description             |
+|---------------|-------------------|-------------------------|
+| id            | VARCHAR(36) (PK)  | user ID                 |
+| username      | VARCHAR(50)       | Unique username         |
+| email         | VARCHAR(100)      | Unique email address    |
+| password_hash | VARCHAR(255)      | Hashed password         |
 
 ### `notes`
 
-| Field      | Type          | Description                    |
-|------------|---------------|--------------------------------|
-| id         | INT (PK)      | note ID                        |
-| user_id    | INT (FK)      | Foreign key to `users`         |
-| title      | VARCHAR(255)  | Note title                     |
-| content    | TEXT          | Note body                      |
-| color      | VARCHAR(20)   | Optional (e.g., yellow, blue)  |
-| created_at | TIMESTAMP     | Auto-set on note creation      |
-| updated_at | TIMESTAMP     | Auto-updated on note update         |
+| Field      | Type             | Description                    |
+|------------|------------------|--------------------------------|
+| id         | VARCHAR(36) (PK) | note ID                        |
+| user_id    | VARCHAR(36) (FK) |     | Foreign key to `users`   |
+| title      | VARCHAR(255)     | Note title                     |
+| content    | TEXT             | Note body                      |
+| color      | VARCHAR(20)      | Optional (e.g., yellow, blue)  |
+| created_at | TIMESTAMP        | Auto-set on note creation      |
+| updated_at | TIMESTAMP        | Auto-updated on note update    |
 
 > For complete schema, refer to [DB_Schema.txt](./DB_Schema.txt)
 

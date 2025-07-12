@@ -4,7 +4,7 @@ Database: notes_app
 Table: users
 (Used for login/signup authentication)
 ----------------------------------------
-- id              : INT, PRIMARY KEY
+- id              : VARCHAR(36), PRIMARY KEY
 - username        : VARCHAR(50), UNIQUE, NOT NULL
 - email           : VARCHAR(100), UNIQUE, NOT NULL
 - password_hash   : VARCHAR(255), NOT NULL
@@ -13,8 +13,8 @@ Table: users
 Table: notes
 (Stores user-created notes)
 ----------------------------------------
-- id              : INT, PRIMARY KEY
-- user_id         : INT, FOREIGN KEY -> users(id), ON DELETE CASCADE
+- id              : VARCHAR(36), PRIMARY KEY
+- user_id         : VARCHAR(36), FOREIGN KEY -> users(id), ON DELETE CASCADE
 - title           : VARCHAR(255), NOT NULL
 - content         : TEXT
 - color           : VARCHAR(20)         -- Optional (e.g., 'yellow', 'green')
