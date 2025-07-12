@@ -1,8 +1,3 @@
-Here is the **Users Endpoint Documentation** in Markdown format for your API. You can save this as `USERS_ENDPOINTS.md` or add it to your `README.md` under an API section.
-
----
-
-````markdown
 # 📘 Users API Documentation
 
 This document provides a detailed overview of all available `/users` endpoints in the Notes App backend. These endpoints are protected using **Basic Authentication** via Spring Security.
@@ -39,7 +34,7 @@ Checks if a given username is already registered.
     }
   }
 }
-````
+```
 
 * **Status Codes**: `200 OK`, `400 Bad Request`
 

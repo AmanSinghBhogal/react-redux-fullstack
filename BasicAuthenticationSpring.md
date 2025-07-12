@@ -1,6 +1,3 @@
-Here’s your full `SECURITY.md` file content in proper Markdown format:
-
-````markdown
 # 🔐 Basic Authentication in Spring Boot
 
 This document explains how **Basic Authentication** is implemented in the Notes App backend using **Spring Boot** and **Spring Security**. It is intended to help future developers understand the authentication flow.
@@ -31,7 +28,7 @@ This document explains how **Basic Authentication** is implemented in the Notes 
 - Custom method:
   ```java
   Optional<User> findByEmail(String email);
-````
+``
 
 ### ✅ Step 3: `UserPrincipal.java`
 
