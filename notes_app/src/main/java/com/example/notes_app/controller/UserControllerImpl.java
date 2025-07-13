@@ -103,7 +103,7 @@ public class UserControllerImpl implements UserController {
 		}
 	}
 
-	@PostMapping
+	@PostMapping("/register")
 	@Override
 	public ResponseEntity<Object> registerUser(@RequestBody User user) {
 		dbg("/users Invoked");

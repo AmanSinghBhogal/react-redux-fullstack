@@ -27,7 +27,7 @@ public class SecurityConfig {
 		http.csrf(customizer -> customizer.disable());
 		http.authorizeHttpRequests(request -> request
 //				.anyRequest().permitAll()
-				.requestMatchers("/users/checkUsername","/users/register")
+				.requestMatchers("/users/checkUsername","/users/register","/notes/fetchAll")
 				.permitAll()
 				.anyRequest().authenticated());
 		

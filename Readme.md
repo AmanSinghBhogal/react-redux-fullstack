@@ -25,6 +25,7 @@ root/
 - Spring Boot
 - Spring Data JPA
 - Spring Web
+- Basic Authentication
 - MySQL
 - Hibernate
 

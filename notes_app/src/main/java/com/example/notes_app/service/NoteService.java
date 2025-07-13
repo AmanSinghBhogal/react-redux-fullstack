@@ -11,15 +11,15 @@ import com.example.notes_app.entity.Note;
 public interface NoteService {
 	
 	// Fetch All Notes:
-	List<Note> fetchAllNotes();
+	Object fetchAllNotes();
 	
 	// Update a Note:  PATCH Request Handling (i.e, Update an existing record)
-	Note patchNote(Map<String, Object> fields);
+	Object patchNote(Map<String, Object> fields, String username);
 	
 	// Delete a Note:
-	String deleteNote(String id);
+	Object deleteNote(String id, String username);
 	
 	// Post a new Note:
-	Note postNote(Note note);
+	Object postNote(Note note, String username);
 
 }
