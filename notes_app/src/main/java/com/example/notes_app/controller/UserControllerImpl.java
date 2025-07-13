@@ -231,4 +231,27 @@ public class UserControllerImpl implements UserController {
 		}
 	}
 
+	@PostMapping
+	@Override
+	public ResponseEntity<Object> login(Map<String, Object> userData) {
+		dbg("/users Invoked");
+		String functionName = "login() --> ";
+		dbg(functionName+"Begins");
+		Map<String, Object> response = new HashMap<>();
+		response.put("respondedAt", LocalDateTime.now());
+		try {
+			dbg(functionName+"Sending call to service layer...");
+			boolean result = (boolean) userService.login(userData);
+			response.put("response", "Success");
+			response.put("status", "Success");
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch(Exception e) {
+			dbg(functionName + "Exception while updating user: "+e);
+			response.put("response", null);
+			response.put("status", "Failure");
+			response.put("failureMsg", e.getMessage());
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+	}
+
 }

@@ -174,6 +174,15 @@ public class UserServiceImpl implements UserService {
 			return e.getMessage();
 		}
 	}
+
+	@Override
+	public Object login(Map<String, Object> userData) {
+		String functionName = "login() --> ";
+		dbg(functionName+ "Begins");
+		dbg(functionName+"Incoming id or username for login is: "+ (String) userData.get("username"));
+		dbg(functionName+"If request has come till here it means the entered credentials were correct.");
+		return true;
+	}
 	
 
 }

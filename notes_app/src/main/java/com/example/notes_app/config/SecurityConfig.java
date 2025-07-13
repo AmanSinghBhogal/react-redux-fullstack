@@ -1,5 +1,7 @@
 package com.example.notes_app.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -33,7 +38,7 @@ public class SecurityConfig {
 		
 		//For enabling Rest Access with default username and password -> Basic Authentication
 		http.httpBasic(Customizer.withDefaults());
-		
+		http.cors();
 		// Lets make our authentication stateless what this will do is every time a new request comes it will give a different session id.. this will ensure that no one else is able to forge your session id and make request on your behalf
 		// Now since we make it stateless we will need to have a token based authentication each time a new request comes it will have to get the token with it which we will validate at our backend side before sending an appropriate response
 		http.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
@@ -56,4 +61,18 @@ public class SecurityConfig {
 //		provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
 		return provider;
 	}
+	
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+	    CorsConfiguration config = new CorsConfiguration();
+	    config.setAllowedOrigins(List.of("http://localhost:5173")); // your frontend origin
+	    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+	    config.setAllowedHeaders(List.of("*"));
+	    config.setAllowCredentials(true);
+
+	    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	    source.registerCorsConfiguration("/**", config);
+	    return source;
+	}
+	
 }

@@ -25,4 +25,7 @@ public interface UserController {
 	
 	// Patch User: only signed in user can update its record.
 	ResponseEntity<Object> updateUser(UserDetails userDetails, Map<String, Object> fields);
+	
+	// Login user:
+	ResponseEntity<Object> login(Map<String, Object> userData);
 }

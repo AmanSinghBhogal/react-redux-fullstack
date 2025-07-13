@@ -27,4 +27,7 @@ public interface UserService {
 	
 	// PATCH Request Handling (i.e, Update an existing record)
 	Object patchUser(Map<String, Object> fields, String requestUsername);
+	
+	// Login User
+	Object login(Map<String, Object> userData);
 }
