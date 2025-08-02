@@ -1,12 +1,13 @@
 /* eslint-disable no-useless-catch */
 import axios from 'axios';
+import { BASE_URL } from './Constants';
 
 export class NoteService {
 
     BASE_URL;
 
     constructor() {
-        this.BASE_URL = "http://localhost:8080";
+        this.BASE_URL = BASE_URL;
     }
 
     async getNotes() {

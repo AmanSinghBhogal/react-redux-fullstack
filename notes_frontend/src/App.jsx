@@ -5,6 +5,10 @@ import Notes from './components/notes/Notes'
 import { useEffect, useState } from 'react';
 import noteService from './api/NotesService';
 import { fetchNotes } from './reducers/notes/NoteSlice';
+import NoteEditor from './components/noteEditor/NoteEditor';
+import NavBar from './components/NavBar/NavBar';
+import Auth from './components/Auth/Auth';
+import {login} from './reducers/users/UserSlice';
 
 function App() {
   const dispatch = useDispatch();
@@ -24,12 +28,19 @@ function App() {
                         setLoading(false);
                     })
 
+        if(localStorage.getItem("userData") !== null){
+          console.log("User already present...");
+          dispatch(login(JSON.parse(localStorage.getItem("userData"))));
+        }
       
     }, []);
 
   return (
     <>
+      <NavBar />
       <Notes loading={loading} />
+      <NoteEditor />
+      <Auth />
     </>
   )
 }

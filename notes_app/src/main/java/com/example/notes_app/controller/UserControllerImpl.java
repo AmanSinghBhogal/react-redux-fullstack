@@ -233,7 +233,7 @@ public class UserControllerImpl implements UserController {
 
 	@PostMapping
 	@Override
-	public ResponseEntity<Object> login(Map<String, Object> userData) {
+	public ResponseEntity<Object> login(@RequestBody Map<String, Object> userData) {
 		dbg("/users Invoked");
 		String functionName = "login() --> ";
 		dbg(functionName+"Begins");
@@ -241,8 +241,9 @@ public class UserControllerImpl implements UserController {
 		response.put("respondedAt", LocalDateTime.now());
 		try {
 			dbg(functionName+"Sending call to service layer...");
-			boolean result = (boolean) userService.login(userData);
-			response.put("response", "Success");
+			Map<String, Object> result = new HashMap<>();
+			result.put("data", userService.login(userData));
+			response.put("response", result);
 			response.put("status", "Success");
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch(Exception e) {

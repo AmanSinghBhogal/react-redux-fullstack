@@ -1,0 +1,18 @@
+.navBarContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border: 1px solid red;
+    padding: 0 20px;
+}
+
+.appName{
+    font-size: large;
+}
+
+.loginBtn{
+    padding: 5px;
+    background-color: inherit;
+    cursor: pointer;
+}

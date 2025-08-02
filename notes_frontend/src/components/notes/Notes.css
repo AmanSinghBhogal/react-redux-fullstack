@@ -4,5 +4,6 @@
     flex-wrap: wrap;
     justify-content: center;
     padding: 40px;
-    min-height: 80vh;
+    min-height: 100vh;
+    border: 1px solid red;
 }

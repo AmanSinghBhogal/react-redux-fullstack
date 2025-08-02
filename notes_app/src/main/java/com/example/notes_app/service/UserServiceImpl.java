@@ -179,9 +179,13 @@ public class UserServiceImpl implements UserService {
 	public Object login(Map<String, Object> userData) {
 		String functionName = "login() --> ";
 		dbg(functionName+ "Begins");
-		dbg(functionName+"Incoming id or username for login is: "+ (String) userData.get("username"));
+		if( (String) userData.get("username") != null)
+			dbg(functionName+"Incoming id or username for login is: "+ (String) userData.get("username"));
+		else
+			dbg(functionName+ "Username not found in request body... taking from basic auth...");
+		
 		dbg(functionName+"If request has come till here it means the entered credentials were correct.");
-		return true;
+		return userRepo.findUser((String) userData.get("username"));
 	}
 	
 

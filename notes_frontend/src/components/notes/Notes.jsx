@@ -5,13 +5,13 @@ import {  useSelector } from 'react-redux';
 
 const Notes = ({loading}) => {
 
-    const notes = useSelector(state => state.notes);
+    const notes = useSelector(state => state.notes.notes);
     
     return (
         <>
            {
                 loading?
-                    "Page is Loading"
+                    "Loading..."
                     :
                     <div class="NotesContainer">
                         {

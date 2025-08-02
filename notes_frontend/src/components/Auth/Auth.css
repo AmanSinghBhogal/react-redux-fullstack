@@ -1,0 +1,120 @@
+.authContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+.login-container{
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 40px;
+    width:500px;
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+    @media (max-width: 756px)
+    {
+        width: 100%;
+        padding: 48px 29px;
+        border: none;
+    }
+}
+
+.login-title{
+    font-size: 1.5rem;
+    color: #282a35;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.login-form{
+    box-sizing: border-box;
+    width: 100%;
+    form{
+        width: 100%;
+    }
+    input{
+        box-sizing: border-box;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        display: flex;
+        margin: 10px 0px;
+        padding: 10px 5px;
+        width: 100%;
+        font-size: 1rem;
+    }
+}
+
+.login-label{
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .acc{
+        font-weight: normal;
+        display: flex;
+        button{
+            display: flex;
+            align-items: center;
+            border:none;
+            background-color: white;
+            color: blue;
+            cursor: pointer;
+            font-weight: 6  00;
+        }
+    }
+    
+}
+
+.login-switch{
+    cursor: pointer;
+    color: blue;
+
+}
+
+.login-submit{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    margin: 20px 0px;
+    button{
+        cursor: pointer;
+        color: white;
+        background-color: blue;
+        padding: 1px 40px;
+        font-size: 1.1rem;
+        font-weight: 700;
+        width: 100%;
+        height: 100%;
+        border-radius: 50px;
+        :hover{
+            box-shadow: darkblue 0px 0px 12px 0px ;
+        }
+    }
+}
+
+.login-password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    margin: 10px 0px;
+}
+
+.login-password input{
+    border: none;   
+    margin: 0 0;
+}
+.login-eye{
+    display: flex;
+    margin: 0 10px;
+    justify-content: center;
+    align-items: center;
+    height: 1rem;
+    cursor: pointer;
+}

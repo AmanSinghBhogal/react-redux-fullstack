@@ -1,0 +1,7 @@
+.noteEditorContainer{
+    border: 1px solid blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
