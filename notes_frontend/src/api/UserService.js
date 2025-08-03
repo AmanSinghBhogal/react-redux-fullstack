@@ -30,8 +30,6 @@ export class UserService {
 
     async loginUser(userData){
         try{
-            console.log("UserData: ");
-            console.log(userData);
             const userResponse= await axios({
                 method: 'post',
                 url: this.BASE_URL+"/users",

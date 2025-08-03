@@ -3,7 +3,7 @@ import './Auth.css';
 import { VscEye } from "react-icons/vsc";
 import { VscEyeClosed } from "react-icons/vsc";
 import userService from '../../api/UserService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../../reducers/users/UserSlice';
 
 const Auth = () => {
@@ -17,11 +17,12 @@ const Auth = () => {
         password: '',
         email: ''
     });
-    const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("userData")? true: false);
+    
+    const isAuthenticated = useSelector(state => state.users.isAuthenticated);
+    
 
     function func(){
         dispatch(logout());
-        setIsAuthenticated(false);
     }
 
     const handleLogin = async (e) => {
@@ -31,15 +32,21 @@ const Auth = () => {
                 console.log("Register user called.");
                 console.log(PersonalDetails);
                 userService.registerUser(PersonalDetails)
-                    .then((httpReponse) => {
+                    .then((httpResponse) => {
                         console.log("httpReponse is: ");
-                        console.log(httpReponse);
-                        const userData = httpReponse?.data?.response?.data;
+                        console.log(httpResponse);
+                        const userData = httpResponse?.data?.response?.data;
                         console.log(userData);
                         console.log(PersonalDetails.password);
-                        userData.password = PersonalDetails.password;
-                        dispatch(login(PersonalDetails));
-                        setIsAuthenticated(true);
+                        if(httpResponse !== null && httpResponse !== undefined){
+                            if(httpResponse.status == 200){
+                                userData.password = PersonalDetails.password;
+                                dispatch(login(PersonalDetails));
+                            }
+                        }
+                        else{
+                            alert("You Dumb!!! check your credentials...");
+                        }
                     })
                     .finally(() => {
                         console.log("User Registered Successfully.");
@@ -51,9 +58,18 @@ const Auth = () => {
                     .then((httpResponse) => {
                         console.log("httpResponse is: ");
                         console.log(httpResponse);
-                        const userData = httpResponse?.data?.response?.data;
-                        dispatch(login(userData));
-                        setIsAuthenticated(true);
+                        let userData = httpResponse?.data?.response?.data;
+                        console.log(`Unhashed Password is: ${PersonalDetails.password}`);
+                        userData= {...userData, password: PersonalDetails.password}
+                        console.log("Dispatching user: ");
+                        console.log(userData);
+                        if(httpResponse !== null && httpResponse !== undefined ){
+                            if(httpResponse.status == 200)
+                                dispatch(login(userData));
+                        }
+                        else{
+                            alert("You Dumb!!! check your credentials...");
+                        }
                     })
                     .finally(() => {
                         console.log("User Logged In");
@@ -69,10 +85,12 @@ const Auth = () => {
     <div id='login' class='authContainer'>
         {
             isAuthenticated? 
-            <div>
-                Already Logged in...
-                <button onClick={func}>Sign Out</button>
-            </div>
+            <form onSubmit={func}>
+                <div>
+                    Already Logged in...
+                    <button type='submit'>Sign Out</button>
+                </div>
+            </form>
             :
             <div class="login-container">
                 <div class="login-title">

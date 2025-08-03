@@ -23,7 +23,7 @@ export const noteSlice = createSlice({
                         state.notes = action.payload;
                     },
         addNote: PostNote,
-        removeNote: () => {},
+        removeNote: DeleteNote,
         updateNote: () => {}
     }
 });
@@ -47,4 +47,11 @@ function PostNote(state, action) {
         updated_at: null
     };
     state.notes.push(note);
+}
+
+function DeleteNote(state, action){
+    console.log("Delete Note Invoked");
+    let id = action.payload;
+    console.log(id);
+    state.notes = state.notes.filter(note=> note.id !== id);
 }

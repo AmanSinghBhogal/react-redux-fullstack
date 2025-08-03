@@ -9,7 +9,8 @@ const NavBar = () => {
   const userdetail = useSelector(state => state.users.user);
   const dispatch= useDispatch();
 
-  function logout1(){
+  const logout1 = (e) => {
+    console.log(e);
     dispatch(logout());
   }
   
@@ -18,12 +19,12 @@ const NavBar = () => {
         <span class='appName'>Practice Notes</span>
         {
           userdetail.username ? 
-          <>
-            <span>
-              {userdetail.username}
-            </span>
-            <button onClick={logout1} >LogOut</button>
-          </>
+            <form onSubmit={logout1}>
+              <span>
+                {userdetail.username}
+              </span>
+              <button type='submit'>LogOut</button>
+            </form>
           :
           <a class='loginBtn' href='#login'>Login/Register</a>
         }
