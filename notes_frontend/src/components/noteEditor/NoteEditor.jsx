@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './NoteEditor.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { PiTextbox } from 'react-icons/pi';
 import noteService from '../../api/NotesService';
-import { addNote } from '../../reducers/notes/NoteSlice';
+import { addNote, updateNote} from '../../reducers/notes/NoteSlice';
 
 const NoteEditor = () => {
 
   const uid = useSelector(state => state.users.user.id);
   const isAuthenticated = useSelector(state=> state.users.isAuthenticated);
   const userData = useSelector(state=> state.users.user);
+  const editNoteData = useSelector(state=> state.notes.editNote);
   const dispatch = useDispatch();
+
 
   const [noteData, setnoteData] = useState({
     user_id:'',
@@ -20,6 +22,22 @@ const NoteEditor = () => {
     created_at: '',
     updated_at:''
   });
+
+
+  useEffect(() => {
+  console.log("useEffect Called", editNoteData);
+  if (editNoteData) {
+    setnoteData({
+      user_id: editNoteData.user_id || '',
+      title: editNoteData.title || '',
+      content: editNoteData.content || '',   
+      color: editNoteData.color || '',
+      created_at: editNoteData.created_at || '',
+      updated_at: editNoteData.updated_at || ''
+    });
+  }
+}, [editNoteData]);
+  
 
   function handleNote(e){
     e.preventDefault();
@@ -31,25 +49,62 @@ const NoteEditor = () => {
     setnoteData(newNoteData);
     console.log("noteData");
     console.log(newNoteData);
+    
+    if(editNoteData){
+      let patchData = {
+        id: editNoteData.id,
+        updated_at: ''
+      }
 
-    noteService.postNote(newNoteData, userData)
-      .then(
-        (response)=> {
-          console.log("httpResponse is::");
-          console.log(response);
-          console.log("data: ");
-          console.log(response?.data?.response?.data);
-        const noteData = response?.data?.response?.data;
+      for(let key in noteData){
+        if(noteData[key] !== editNoteData[key]){
+          patchData = {
+            ...patchData,
+            [key]: noteData[key]
+          }
+        }
+      }
 
-        if(response.status === 200){
+      console.log("Final Data going in Patch Request is::");
+      console.log(patchData);
+      
+      noteService.patchNote(patchData, userData)
+        .then((response) => {
+            console.log("httpResponse is::");
+            console.log(response);
+            console.log("data");
+            console.log(response?.data?.response?.data);
+            const editedNoteReponse = response?.data?.response?.data;
 
-          dispatch(addNote(noteData));
-        }
-        else{
-          alert(response.name+ ":: "+response.message);
-        }
-        }
-      )
+            if(response.status === 200){
+              dispatch(updateNote(editedNoteReponse));
+            }
+            else{
+            alert(response.name+ ":: "+response.message);
+          }
+        })
+    }
+    else{
+      noteService.postNote(newNoteData, userData)
+        .then(
+          (response)=> {
+            console.log("httpResponse is::");
+            console.log(response);
+            console.log("data: ");
+            console.log(response?.data?.response?.data);
+          const noteData = response?.data?.response?.data;
+  
+          if(response.status === 200){
+  
+            dispatch(addNote(noteData));
+          }
+          else{
+            alert(response.name+ ":: "+response.message);
+          }
+          }
+        )
+
+    }
     }
 
   return (
@@ -59,8 +114,17 @@ const NoteEditor = () => {
       <>
         <form onSubmit={handleNote}>
           <div>
+            {
+
+            editNoteData?.title? 
+            <h1>Edit Your Note Here</h1>
+            : 
+            <h1>Create New Note</h1>
+            }
+          </div>
+          <div>
             <span>Title:  </span>
-            <input type='text' placeholder="Write Title..." 
+            <input type='text' placeholder="Write Title..."  value={noteData.title} 
                    onChange={(e) => {
                       setnoteData(
                         {
@@ -73,7 +137,7 @@ const NoteEditor = () => {
           </div>
           <div>
             <span>Content:  </span>
-            <textarea placeholder='Enter your message here'
+            <textarea placeholder='Enter your message here' value={noteData.content}
               onChange={(e)=> {
                 setnoteData(
                   {
@@ -86,7 +150,7 @@ const NoteEditor = () => {
           </div>
           <div>
             <span>Color:  </span>
-            <input type='color' 
+            <input type='color' value={noteData.color}
               onChange={(e)=> {
                 setnoteData(
                   {
@@ -97,7 +161,11 @@ const NoteEditor = () => {
               }}
             />
           </div>
-          <button type='submit' >Submit</button>
+          <button type='submit' >
+            {
+              editNoteData?.title? "Update": "Submit"
+            }
+          </button>
         </form>
       </>
       :

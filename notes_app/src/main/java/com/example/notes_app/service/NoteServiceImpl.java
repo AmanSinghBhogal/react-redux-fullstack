@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,23 @@ public class NoteServiceImpl implements NoteService {
 						dbg(functionName+"Updating key:: "+key);
 		                Field field = ReflectionUtils.findField(Note.class, key);
 		                field.setAccessible(true);
-		                ReflectionUtils.setField(field, existingNote, value);
+		                if(key.equals("created_at") || key.equals("updated_at")) {
+		                	dbg(functionName+"value::"+value);
+		                	String ts = new String();
+		                	Timestamp val;
+		                	if(!Objects.isNull(value) && value != null && !value.equals("")) {
+		                		ts = (String)value;
+		                		dbg(functionName+"ts::"+ts);
+		                		val = Timestamp.valueOf(ts);
+		                	}
+		                	else {
+		                		dbg(functionName+"val is null");
+		                		val = Timestamp.valueOf(LocalDateTime.now());
+		                	}
+		                	ReflectionUtils.setField(field, existingNote, val);
+		                }
+		                else
+		                	ReflectionUtils.setField(field, existingNote, value);
 					});
 					existingNote.setUpdated_at(Timestamp.valueOf(LocalDateTime.now()));
 					dbg(functionName+"Updated note before save: "+existingNote.toString());

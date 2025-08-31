@@ -79,6 +79,35 @@ export class NoteService {
         }
     }
 
+    async patchNote(editNoteData, userData){
+        try{
+            console.log("Request body is:: ");
+            console.log(editNoteData);
+            console.log("Editing Note");
+            const editNote = await axios({
+                method: 'patch',
+                url: this.BASE_URL+"/notes",
+                auth: {
+                    username: userData.username,
+                    password: userData.password
+                },
+                data: editNoteData
+            })
+
+            if(editNote !== null){
+                console.log("Note::");
+                console.log(editNote);
+                return editNote;
+            }else{
+                return null;
+            }
+
+        }catch(error){
+            console.log(error) ;
+            return error;
+        }
+    }
+
 }
 
 const noteService = new NoteService();

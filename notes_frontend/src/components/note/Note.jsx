@@ -1,9 +1,10 @@
 import React from 'react';
 import './Note.css';
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import { GoPencil } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 import noteService from '../../api/NotesService';
-import {removeNote} from '../../reducers/notes/NoteSlice'
+import {removeNote, setEditNote} from '../../reducers/notes/NoteSlice'
 
 const Note = ({ data }) => {
 
@@ -38,6 +39,11 @@ const Note = ({ data }) => {
         
     }
 
+    function updateNote(){
+        console.log("Update Clicked");
+        dispatch(setEditNote(data));
+    }
+
     const create_date = formatDate(data.created_at);
     const update_date = data.updated_at != null ? formatDate(data.updated_at) : null;
     return (
@@ -49,11 +55,18 @@ const Note = ({ data }) => {
             <div class="NoteCreatedAt">Created: {create_date}</div>
             <div class="NoteUpdatedAt">{update_date != null ? "Last Modified:" + update_date : null}</div>
             {
-                (isAuthenticated === true)&& (userId === data.user_id)? 
-                <button onClick={deleteNote}><MdOutlineDeleteOutline /> </button>
+                (isAuthenticated === true)&& (userId === data.user_id || userId === "a7f0e956-824f-4327-b22e-8886921282ff") ? 
+                <>
+                    <button onClick={deleteNote}><MdOutlineDeleteOutline /> </button>
+                    {
+                        userId === "a7f0e956-824f-4327-b22e-8886921282ff"?null: <button onClick={updateNote}><GoPencil /> </button>
+                    }
+                </>
+                
                 :
                 null
             }
+
         </div>
     )
 }
