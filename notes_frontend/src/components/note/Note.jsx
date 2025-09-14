@@ -4,7 +4,8 @@ import { MdOutlineDeleteOutline } from "react-icons/md";
 import { GoPencil } from "react-icons/go";
 import { useDispatch, useSelector } from 'react-redux';
 import noteService from '../../api/NotesService';
-import {removeNote, setEditNote} from '../../reducers/notes/NoteSlice'
+import {removeNote, setEditNote} from '../../reducers/notes/NoteSlice';
+import { Link} from 'react-router';
 
 const Note = ({ data }) => {
 
@@ -59,7 +60,7 @@ const Note = ({ data }) => {
                 <>
                     <button onClick={deleteNote}><MdOutlineDeleteOutline /> </button>
                     {
-                        userId === "a7f0e956-824f-4327-b22e-8886921282ff"?null: <button onClick={updateNote}><GoPencil /> </button>
+                        userId === "a7f0e956-824f-4327-b22e-8886921282ff"?null: <Link to="/createNote" onClick={updateNote}><GoPencil /> </Link>
                     }
                 </>
                 

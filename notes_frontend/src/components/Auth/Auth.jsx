@@ -5,10 +5,12 @@ import { VscEyeClosed } from "react-icons/vsc";
 import userService from '../../api/UserService';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../../reducers/users/UserSlice';
+import { useNavigate } from 'react-router';
 
 const Auth = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [SignUp, setSignUp] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
@@ -42,6 +44,7 @@ const Auth = () => {
                             if(httpResponse.status == 200){
                                 userData.password = PersonalDetails.password;
                                 dispatch(login(PersonalDetails));
+                                navigate("/");
                             }
                         }
                         else{
@@ -64,8 +67,10 @@ const Auth = () => {
                         console.log("Dispatching user: ");
                         console.log(userData);
                         if(httpResponse !== null && httpResponse !== undefined ){
-                            if(httpResponse.status == 200)
+                            if(httpResponse.status == 200){
                                 dispatch(login(userData));
+                                navigate("/");
+                            }
                         }
                         else{
                             alert("You Dumb!!! check your credentials...");

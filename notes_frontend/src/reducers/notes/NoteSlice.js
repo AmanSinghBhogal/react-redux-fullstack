@@ -5,6 +5,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     notes: [{}],
     editNote: {},
+    isLoading: true,
 }
 
 // state - this variable gives you access to the current state of that slice in our store.
@@ -28,12 +29,15 @@ export const noteSlice = createSlice({
         setEditNote: (state, action) => {
                         state.editNote = action.payload;
                 },
-        updateNote: UpdateNote
+        updateNote: UpdateNote,
+        updateLoading: (state, action) => {
+            state.isLoading = action.payload;
+        }
     }
 });
 
 // Export the individual functionality.
-export const {fetchNotes, addNote, removeNote, updateNote, setEditNote} = noteSlice.actions
+export const {fetchNotes, addNote, removeNote, updateNote, setEditNote, updateLoading} = noteSlice.actions
 
 // Export all reducers for the store:
 export default noteSlice.reducer
@@ -67,5 +71,6 @@ function UpdateNote(state, action){
             ...state.notes[index],
             ...action.payload
         }
+        state.editNote = {};
     }
 }

@@ -1,21 +1,20 @@
-// import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import './App.css'
-import Notes from './components/notes/Notes'
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import noteService from './api/NotesService';
-import { fetchNotes } from './reducers/notes/NoteSlice';
-import NoteEditor from './components/noteEditor/NoteEditor';
-import NavBar from './components/NavBar/NavBar';
-import Auth from './components/Auth/Auth';
-import {login} from './reducers/users/UserSlice';
+import { fetchNotes, updateLoading } from './reducers/notes/NoteSlice';
+// import {login} from './reducers/users/UserSlice';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import { Outlet } from 'react-router';
+import { login } from './reducers/users/UserSlice';
 
 function App() {
-  const dispatch = useDispatch();
-
-    const [loading, setLoading] = useState(true);
+  
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log("Inside UseEffect");
         noteService.getNotes()
                     .then((response) => {
                         console.log('data is:');
@@ -25,7 +24,7 @@ function App() {
                             dispatch(fetchNotes(data));
                     })
                     .finally(() => {
-                        setLoading(false);
+                        dispatch(updateLoading(false));
                     })
 
         if(localStorage.getItem("userData") !== null){
@@ -37,10 +36,9 @@ function App() {
 
   return (
     <>
-      <NavBar />
-      <Notes loading={loading} />
-      <NoteEditor />
-      <Auth />
+      <Header />
+      <Outlet />
+      <Footer/>
     </>
   )
 }

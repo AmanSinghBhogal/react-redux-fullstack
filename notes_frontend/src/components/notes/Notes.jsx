@@ -1,12 +1,14 @@
 import React from 'react';
 import './Notes.css';
 import Note from '../note/Note';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-const Notes = ({loading}) => {
+const Notes = () => {
 
-    const notes = useSelector(state => state.notes.notes);
-    
+    const notes = useSelector(state => state?.notes?.notes);
+
+    const loading = useSelector(state => state?.notes?.isLoading);
+
     return (
         <>
            {

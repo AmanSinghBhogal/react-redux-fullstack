@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { PiTextbox } from 'react-icons/pi';
 import noteService from '../../api/NotesService';
 import { addNote, updateNote} from '../../reducers/notes/NoteSlice';
+import { Link, useNavigate } from 'react-router';
 
 const NoteEditor = () => {
 
@@ -12,7 +13,7 @@ const NoteEditor = () => {
   const userData = useSelector(state=> state.users.user);
   const editNoteData = useSelector(state=> state.notes.editNote);
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
 
   const [noteData, setnoteData] = useState({
     user_id:'',
@@ -78,6 +79,7 @@ const NoteEditor = () => {
 
             if(response.status === 200){
               dispatch(updateNote(editedNoteReponse));
+              navigate("/");
             }
             else{
             alert(response.name+ ":: "+response.message);
@@ -115,8 +117,8 @@ const NoteEditor = () => {
         <form onSubmit={handleNote}>
           <div>
             {
-
             editNoteData?.title? 
+
             <h1>Edit Your Note Here</h1>
             : 
             <h1>Create New Note</h1>
@@ -161,9 +163,11 @@ const NoteEditor = () => {
               }}
             />
           </div>
-          <button type='submit' >
+          <button className='text-gray-800 bg-orange-500 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 focus:outline-none' type='submit' >
             {
-              editNoteData?.title? "Update": "Submit"
+              editNoteData?.title? 
+                "Update"
+              : "Submit"
             }
           </button>
         </form>
